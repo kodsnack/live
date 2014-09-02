@@ -6,17 +6,18 @@
     <link href='http://fonts.googleapis.com/css?family=VT323' rel='stylesheet' type='text/css'>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
     <style>
-      body { background: #222; color: #aaafac; font-family: 'VT323', sans-serif; font-size: 22px; }
-      h1 { color: #268bd2; }
+      body { margin: 0px; padding: 0px; background: #222; color: #aaafac; font-family: 'VT323', sans-serif; font-size: 24px; }
+      h1 { color: #268bd2; font-size: 80px; }
       #content { width: 500px; margin-left: auto; margin-right: auto;
       text-align: center; }
       p { margin-bottom: 1em; }
-      #intro { font-size: 90%; }
+      #intro { color: #555; font-size: 90%; }
       #player { width: 460px; margin-left: auto; margin-right: auto; padding: 0px;
       text-align: center;}
-      #footer { margin-top: 32px; width: 100%; font-size: 15px; }
+      #footer { position: absolute; left: 0px; bottom: 0px; width: 100%; font-size: 20px; background: #1a1a1a; text-align: center; padding-top: 2px; padding-bottom: 8px; }
       #footer a { color: #666; text-decoration: none; }
       #footer a:hover { color: #268bd2; font-weight: bold; }
+      .fel { color: #fff; padding: 2px; border: 2px solid #911;  }
     </style>
   </head>
   <body>
@@ -24,22 +25,21 @@
       <div id="header">
         <h1>KODSNACK LIVE</h1>
       </div>
-      <div id="intro">
-      <p>Här kan man lyssna på kodsnack under inspelning.</p>
-      <p>Spelaren kräver stöd för MP3, det fungerar troligtvis bäst i Chrome
-        och troligtvis mindre bra i Firefox.</p>
-      </div>
       <div id="player">
       </div>
 
       <div id="status">
       </div>
-      
-      <div id="footer">
-        <a href="http://kodsnack.se/">kodsnack.se</a>
-      </div>
 
+      <div id="intro">
+      <p>Spelaren kräver stöd för MP3, det fungerar troligtvis bäst i Chrome
+        och troligtvis mindre bra i Firefox.</p>
+      </div>
+      
    </div>
+      <div id="footer">
+        Tidigare avsnitt hittas på <a href="http://kodsnack.se/">kodsnack.se</a>.
+      </div>
       <script type="text/javascript">
 $(function() {
     function updateStatus(icestats) {
@@ -71,7 +71,10 @@ $(function() {
                           updateFeed();
                       }, 2000);
                   }).error(function(jqXHR, textStatus, errorThrown) {
-                      $("#status").html("Ett fel inträffade: " + textStatus);
+                      console.log(jqXHR);
+                      console.log(textStatus);
+                      console.log(errorThrown);
+                      $("#status").html("<span class=\"fel\">Offline.</span>");
                       setTimeout(function() {
                           startFeed();
                       }, 2000);
@@ -96,8 +99,10 @@ $(function() {
                           }, 5000);
                       }
                   }).error(function(jqXHR, textStatus, errorThrown) {
-                      $("#player").html("");
-                      $("#status").html(textStatus);
+                      console.log(jqXHR);
+                      console.log(textStatus);
+                      console.log(errorThrown);
+                      $("#status").html("<span class=\"fel\">Offline.</span>");
 
                       setTimeout(function() {
                           startFeed();
