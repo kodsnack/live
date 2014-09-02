@@ -4,12 +4,14 @@
     <title>Kodsnack LIVE</title>
     <meta charset="utf-8" />
     <link href='http://fonts.googleapis.com/css?family=VT323' rel='stylesheet' type='text/css'>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
     <style>
       body { background: #222; color: #aaafac; font-family: 'VT323', sans-serif; font-size: 22px; }
       h1 { color: #268bd2; }
-      #content { width: 640px; margin-left: auto; margin-right: auto;
+      #content { width: 500px; margin-left: auto; margin-right: auto;
       text-align: center; }
       p { margin-bottom: 1em; }
+      #intro { font-size: 90%; }
       #player { width: 460px; margin-left: auto; margin-right: auto; padding: 0px;
       text-align: center;}
       #footer { margin-top: 32px; width: 100%; font-size: 15px; }
@@ -22,16 +24,88 @@
       <div id="header">
         <h1>KODSNACK LIVE</h1>
       </div>
+      <div id="intro">
       <p>Här kan man lyssna på kodsnack under inspelning.</p>
       <p>Spelaren kräver stöd för MP3, det fungerar troligtvis bäst i Chrome
         och troligtvis mindre bra i Firefox.</p>
+      </div>
       <div id="player">
-        <audio id="audioplayer" src="http://live.kodsnack.se:8000/kodsnack" autoplay="autoplay" controls />
+      </div>
+
+      <div id="status">
       </div>
       
       <div id="footer">
         <a href="http://kodsnack.se/">kodsnack.se</a>
       </div>
+
    </div>
+      <script type="text/javascript">
+$(function() {
+    function updateStatus(icestats) {
+        if ("source" in icestats) {
+            $("#status").html("Vi är live! " + icestats.source.listeners + " lyssnare just nu.");
+        } else {
+            $("#status").html("Ingen sändning för tillfället.");
+        }
+    }
+
+    function createPlayer(icestats) {
+        if ("source" in icestats) {
+            $("#player").html("<audio id=\"audioplayer\" src=\"" +
+                              icestats.source.listenurl +
+                              "\" autoplay=\"autoplay\" controls/>");
+        } else {
+            $("#player").html("");
+        }
+    }
+
+    function updateFeed() {
+        var cacheBust = new Date().getTime();
+        console.log("updateFeed!");
+        $.getJSON("/feed.json?cacheBust="+cacheBust, {},
+                  function(data) {
+                      console.log("Got feed status. " + data);
+                      updateStatus(data.icestats);
+                      setTimeout(function() {
+                          updateFeed();
+                      }, 2000);
+                  }).error(function(jqXHR, textStatus, errorThrown) {
+                      $("#status").html("Ett fel inträffade: " + textStatus);
+                      setTimeout(function() {
+                          startFeed();
+                      }, 2000);
+                  });
+    }
+
+    function startFeed() {
+        var cacheBust = new Date().getTime();
+        console.log("startFeed!");
+        $.getJSON("/feed.json?cacheBust="+cacheBust, {},
+                  function(data) {
+                      console.log("Got feed status. " + data);
+                      updateStatus(data.icestats);
+                      createPlayer(data.icestats);
+                      if ("source" in data.icestats) {
+                          setTimeout(function() {
+                              updateFeed();
+                          }, 2000);
+                      } else {
+                          setTimeout(function() {
+                              startFeed();
+                          }, 5000);
+                      }
+                  }).error(function(jqXHR, textStatus, errorThrown) {
+                      $("#player").html("");
+                      $("#status").html(textStatus);
+
+                      setTimeout(function() {
+                          startFeed();
+                      }, 5000);
+                  });
+    }
+    startFeed();
+});
+      </script>
   </body>
 </html>
