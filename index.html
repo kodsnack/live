@@ -24,18 +24,18 @@
       </div>
 
       <iframe src="https://kiwiirc.com/client/chat.freenode.net/?nick=kodare|?&theme=cli#kodsnack" style="border:0; width:100%; height:450px;"></iframe>
-      
    </div>
       <div id="footer">
-        Tidigare avsnitt hittas på <a href="http://kodsnack.se/">kodsnack.se</a>.
+        Podcasten finns på <a href="http://kodsnack.se/">kodsnack.se</a>. Stort tack till <a href="http://www.cloudnet.se/">Cloudnet</a> som fixat VPS åt oss.
       </div>
       <script type="text/javascript">
 $(function() {
     function updateStatus(icestats) {
         if ("source" in icestats) {
-            $("#status").html("Vi är live! " + icestats.source.listeners + " lyssnare just nu.");
+            $("#status").html("<p>Vi är live! " + icestats.source.listeners + " lyssnare just nu.</p>" +
+                              "<p><a href=\"" + icestats.source.listenurl + "\">Direktlänk till strömmen</a>.</p>");
         } else {
-            $("#status").html("Ingen sändning för tillfället.");
+            $("#status").html("<p>Ingen sändning för tillfället.</p>");
         }
     }
 
