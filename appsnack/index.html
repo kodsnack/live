@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <title>Appsnack LIVE</title>
+    <meta charset="utf-8" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <link href='/live.css' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <div id="content">
+      <div id="header">
+        <h1>APPSNACK LIVE</h1>
+      </div>
+      <div id="player">
+      </div>
+
+      <div id="status">
+      </div>
+
+      <div id="intro">
+      <p>Spelaren kräver stöd för MP3, det fungerar troligtvis bäst i Chrome
+        och möjligen mindre bra i Firefox.</p>
+      </div>
+
+      <iframe src="https://kiwiirc.com/client/chat.freenode.net/?nick=appsnack|?&theme=cli#appsnack" style="border:0; width:100%; height:450px;"></iframe>
+   </div>
+      <div id="footer">
+        Avsnitt: <a href="http://appsnack.se/">appsnack.se</a>. Stort tack till <a href="http://www.cloudnet.se/">Cloudnet</a> som fixat VPS åt oss.
+      </div>
+      <script type="text/javascript">
+$(function() {
+    function updateStatus(icestats) {
+        if ("source" in icestats) {
+            $("#status").html("<p>Vi är live! " + icestats.source.listeners + " lyssnare just nu.</p>" +
+                              "<p><a href=\"" + icestats.source.listenurl + "\">Direktlänk till strömmen</a>.</p>");
+        } else {
+            $("#status").html("<p>Ingen sändning för tillfället.</p>");
+        }
+    }
+
+    function createPlayer(icestats) {
+        if ("source" in icestats) {
+            $("#player").html("<audio id=\"audioplayer\" src=\"" +
+                              icestats.source.listenurl +
+                              "\" autoplay=\"autoplay\" controls/>");
+        } else {
+            $("#player").html("");
+        }
+    }
+
+    function updateFeed() {
+        var cacheBust = new Date().getTime();
+        console.log("updateFeed!");
+        $.getJSON("/feed.json?cacheBust="+cacheBust, {},
+                  function(data) {
+                      console.log("Got feed status. " + data);
+                      updateStatus(data.icestats);
+                      setTimeout(function() {
+                          updateFeed();
+                      }, 2000);
+                  }).error(function(jqXHR, textStatus, errorThrown) {
+                      console.log(jqXHR);
+                      console.log(textStatus);
+                      console.log(errorThrown);
+                      $("#status").html("<span class=\"fel\">Offline.</span>");
+                      setTimeout(function() {
+                          startFeed();
+                      }, 2000);
+                  });
+    }
+
+    function startFeed() {
+        var cacheBust = new Date().getTime();
+        console.log("startFeed!");
+        $.getJSON("/feed.json?cacheBust="+cacheBust, {},
+                  function(data) {
+                      console.log("Got feed status. " + data);
+                      updateStatus(data.icestats);
+                      createPlayer(data.icestats);
+                      if ("source" in data.icestats) {
+                          setTimeout(function() {
+                              updateFeed();
+                          }, 2000);
+                      } else {
+                          setTimeout(function() {
+                              startFeed();
+                          }, 5000);
+                      }
+                  }).error(function(jqXHR, textStatus, errorThrown) {
+                      console.log(jqXHR);
+                      console.log(textStatus);
+                      console.log(errorThrown);
+                      $("#status").html("<span class=\"fel\">Offline.</span>");
+
+                      setTimeout(function() {
+                          startFeed();
+                      }, 5000);
+                  });
+    }
+    startFeed();
+});
+      </script>
+  </body>
+</html>

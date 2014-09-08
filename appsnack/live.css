@@ -1,0 +1,64 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    background: #000;
+    color: #aaafac;
+    font-family: 'Roboto', sans-serif;
+    font-size: 24px;
+}
+
+h1 {
+    color: #268bd2;
+    font-size: 80px;
+}
+
+#content {
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+p {
+    margin-bottom: 8px;
+}
+
+#intro {
+    color: #555;
+    font-size: 90%;
+}
+
+#player {
+    width: 460px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0px;
+    text-align: center;
+}
+
+#footer {
+    position: absolute;
+    left: 0px; bottom: 0px;
+    width: 100%;
+    font-size: 20px;
+    background: #1a1a1a;
+    text-align: center;
+    padding-top: 2px;
+    padding-bottom: 8px;
+}
+
+#footer a {
+    color: #666;
+    text-decoration: none;
+}
+
+#footer a:hover {
+    color: #268bd2;
+    font-weight: bold;
+}
+
+.fel { 
+    color: #fff; 
+    padding: 2px; 
+    border: 2px solid #911;
+}
