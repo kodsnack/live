@@ -1,14 +1,14 @@
 body {
     margin: 0px;
     padding: 0px;
-    background: #000;
-    color: #aaafac;
+    background: #f9f9f9;
+    color: #333333;
     font-family: 'Roboto', sans-serif;
     font-size: 24px;
 }
 
 h1 {
-    color: #268bd2;
+    color: #1B9BB8;
     font-size: 80px;
 }
 
@@ -41,24 +41,24 @@ p {
     left: 0px; bottom: 0px;
     width: 100%;
     font-size: 20px;
-    background: #1a1a1a;
+    background: #f2f2f2;
     text-align: center;
     padding-top: 2px;
     padding-bottom: 8px;
 }
 
 #footer a {
-    color: #666;
+    color: #E94E1B;
     text-decoration: none;
 }
 
 #footer a:hover {
-    color: #268bd2;
+    color: #1B9BB8;
     font-weight: bold;
 }
 
 .fel { 
-    color: #fff; 
+    color: #E94E1B; 
     padding: 2px; 
-    border: 2px solid #911;
+    border: 2px solid #E94E1B;
 }
