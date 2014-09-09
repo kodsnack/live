@@ -5,25 +5,36 @@
     <meta charset="utf-8" />
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-    <link href='/live.css' rel='stylesheet' type='text/css'>
+    <link href='live.css' rel='stylesheet' type='text/css'>
   </head>
   <body>
     <div id="content">
       <div id="header">
         <h1>APPSNACK LIVE</h1>
       </div>
-      <div id="player">
+      
+      <div id="sidebar">
+      <img src="http://static.squarespace.com/static/515e932ae4b03ae0a1168ff8/t/537dfba7e4b0bb0d036f88ca/1409672471397/?format=1500w" alt="AppSnack live" />
+      <p>Allt om Apple och allt runtomkring. Skönt, nördigt, en gång i veckan.</p>
+<p> Häng med oss LIVE under Apples Keynote den 9/9. Exklusivt för våra Patreon-sponsorer. Ni kan också chatta med oss här på siten eller på IRC.<p>
+<p>Server: <strong>irc.freenode.net</strong><br>
+Room: <strong>Appsnack</strong></p>
+<p>Rekommenderade appar är <a href="https://itunes.apple.com/se/app/textual/id403012667?mt=12">Textual</a> eller <a href="http://colloquy.info/index.html">Colloquy</a>.</p>
+      </div> <!-- sidebar -->
+      
+      <div class="entry">
+        <div id="player">
+        </div>
+  
+        <div id="status">
+        </div>
+  
+        <iframe src="https://kiwiirc.com/client/chat.freenode.net/?nick=appsnack|?#appsnack" style="  border:0; width:100%; height:450px;"></iframe>
+        <div id="intro">
+        <i>Spelaren kräver stöd för MP3. Fungerar bäst i Google Chrome. <br/><a href="http://en.wikipedia.org/wiki/HTML5_Audio">Se vilka webbläsare som stödjer mp3</a>.</i>
+        </div>
       </div>
 
-      <div id="status">
-      </div>
-
-      <div id="intro">
-      <p>Spelaren kräver stöd för MP3, det fungerar troligtvis bäst i Chrome
-        och möjligen mindre bra i Firefox.</p>
-      </div>
-
-      <iframe src="https://kiwiirc.com/client/chat.freenode.net/?nick=appsnack|?#appsnack" style="border:0; width:100%; height:450px;"></iframe>
    </div>
       <div id="footer">
         Avsnitt: <a href="http://appsnack.se/">appsnack.se</a>. Stort tack till <a href="http://www.cloudnet.se/">Cloudnet</a> som fixat VPS åt oss.
